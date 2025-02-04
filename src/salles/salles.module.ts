@@ -7,10 +7,10 @@ import { SalleController } from './controllers/salle/salle.controller';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Salle.name, schema: SalleSchema }]), // Ajout du modèle
+    MongooseModule.forFeature([{ name: Salle.name, schema: SalleSchema }]), 
   ],
   providers: [SalleService],
   controllers: [SalleController],
-  exports: [SalleService], // Si utilisé dans un autre module
+  exports: [SalleService], 
 })
 export class SallesModule {}
