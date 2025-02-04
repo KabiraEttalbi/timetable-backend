@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { Controller, Get, Post, Body, Param, Put, Delete, NotFoundException, BadRequestException, Query } from '@nestjs/common';
 import { EmploiDuTemps } from '../../models/emploiDuTemps.model';
 import { EmploiDuTempsService } from '../../services/emploi-du-temps/emploi-du-temps.service';
