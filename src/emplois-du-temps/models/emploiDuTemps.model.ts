@@ -10,6 +10,7 @@ export enum ScheduleType {
 
 @Schema({ timestamps: true })
 export class EmploiDuTemps {
+
   @Prop({ required: true })
   jour: string;
 
