@@ -5,10 +5,10 @@ export type DepartementDocument = Departement & Document;
 
 @Schema()
 export class Departement {
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true })
     name: string;
 
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true })
     description: string;
 }
 

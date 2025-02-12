@@ -5,10 +5,10 @@ export type OptionDocument = Option & Document;
 
 @Schema()
 export class Option {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   description: string;
 
   @Prop({ required: true })
