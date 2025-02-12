@@ -12,8 +12,8 @@ export class UpdateOptionDto {
 
   @IsNumber()
   @IsOptional()
-  duration?: number;
+  duration?: string;
 
   @IsOptional()
-  department?: Types.ObjectId;
+  departement?: Types.ObjectId;
 }

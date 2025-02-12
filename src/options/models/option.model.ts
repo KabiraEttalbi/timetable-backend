@@ -12,10 +12,10 @@ export class Option {
   description: string;
 
   @Prop({ required: true })
-  duration: number;
+  duration: string;
 
-  @Prop({ type: Types.ObjectId, ref: "Department", required: true })
-  department: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: "Departement", required: true })
+  departement: Types.ObjectId;
 }
 
 export const OptionSchema = SchemaFactory.createForClass(Option);

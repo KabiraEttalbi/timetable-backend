@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class CreateOptionDto {
@@ -10,10 +10,10 @@ export class CreateOptionDto {
   @IsNotEmpty()
   description: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  duration: number;
+  duration: string;
 
   @IsNotEmpty()
-  department: Types.ObjectId; // Reference to the Department model
+  departement: Types.ObjectId; // Reference to the Department model
 }

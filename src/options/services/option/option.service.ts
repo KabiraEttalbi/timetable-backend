@@ -19,7 +19,7 @@ export class OptionService {
   async create(createOptionDto: CreateOptionDto): Promise<Option> {
     // Check if the referenced department exists
     const department = await this.departementModel
-      .findById(createOptionDto.department)
+      .findById(createOptionDto.departement)
       .exec();
     if (!department) {
       throw new NotFoundException('Department not found');
@@ -30,11 +30,11 @@ export class OptionService {
   }
 
   async findAll(): Promise<Option[]> {
-    return this.optionModel.find().populate('department').exec();
+    return this.optionModel.find().populate('departement').exec();
   }
 
   async findOne(id: string): Promise<Option | null> {
-    return this.optionModel.findById(id).populate('department').exec();
+    return this.optionModel.findById(id).populate('departement').exec();
   }
 
   async update(
@@ -43,7 +43,7 @@ export class OptionService {
   ): Promise<Option | null> {
     return this.optionModel
       .findByIdAndUpdate(id, updateOptionDto, { new: true })
-      .populate('department')
+      .populate('departement')
       .exec();
   }
 
