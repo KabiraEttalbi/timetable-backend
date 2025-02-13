@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Niveau } from '../../models/niveau.model';
+import { CreateNiveauDto } from '../../dto/create-niveau.dto';
+import { UpdateNiveauDto } from '../..//dto/update-niveau.dto';
 
 @Injectable()
 export class NiveauService {
@@ -9,10 +11,11 @@ export class NiveauService {
     @InjectModel(Niveau.name) private readonly niveauModel: Model<Niveau>,
   ) {}
 
-  async create(niveau: Niveau): Promise<Niveau> {
-    const newNiveau = new this.niveauModel(niveau);
+  async create(createNiveauDto: CreateNiveauDto): Promise<Niveau> {
+    const newNiveau = new this.niveauModel(createNiveauDto);
     return newNiveau.save();
   }
+
 
   async findAll(): Promise<Niveau[]> {
     return this.niveauModel.find().exec();
@@ -22,8 +25,8 @@ export class NiveauService {
     return this.niveauModel.findById(id).exec();
   }
 
-  async update(id: string, niveau: Niveau): Promise<Niveau | null> {
-    return this.niveauModel.findByIdAndUpdate(id, niveau, { new: true }).exec();
+  async update(id: string, updateNiveauDto: UpdateNiveauDto): Promise<Niveau | null> {
+    return this.niveauModel.findByIdAndUpdate(id, updateNiveauDto, { new: true }).exec();
   }
 
   async delete(id: string): Promise<Niveau | null> {
