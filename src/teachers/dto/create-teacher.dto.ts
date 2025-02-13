@@ -1,9 +1,10 @@
 import { IsString, IsNotEmpty, IsArray } from 'class-validator';
 import { Types } from 'mongoose';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 export class CreateTeacherDto {
   @IsNotEmpty()
-  user: Types.ObjectId; // Reference to the User model
+  user: CreateUserDto; // Reference to the User model
 
   @IsNotEmpty()
   department: Types.ObjectId; // Reference to the Departement model
