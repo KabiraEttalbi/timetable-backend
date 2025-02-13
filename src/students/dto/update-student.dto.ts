@@ -1,15 +1,26 @@
-import { IsString, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNumber, IsOptional, Matches } from 'class-validator';
 import { Types } from 'mongoose';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 
 export class UpdateStudentDto {
   @IsOptional()
-  user?: Types.ObjectId;
+  user?: UpdateUserDto;
 
   @IsOptional()
   niveau?: Types.ObjectId;
 
   @IsOptional()
   option?: Types.ObjectId;
+
+  @IsOptional()
+  @IsString()
+  @Matches(/^[A-Za-z]\d{9}$/)    
+  cne?: string;
+    
+  @IsOptional()
+  @IsString()
+  @Matches(/^[A-Za-z]{1,2}\d{6}$/)
+  cni?: string; 
 
   @IsString()
   @IsOptional()

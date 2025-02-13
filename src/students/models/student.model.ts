@@ -5,7 +5,7 @@ export type StudentDocument = Student & Document;
 
 @Schema()
 export class Student {
-    @Prop({ type: Types.ObjectId, ref: "User", required: true })
+    @Prop({ type: Types.ObjectId, ref: "User", required: true, unique: true })
     user: Types.ObjectId;
 
     @Prop({ type: Types.ObjectId, ref: "Niveau", required: true })
@@ -13,6 +13,12 @@ export class Student {
 
     @Prop({ type: Types.ObjectId, ref: "Option", required: true })
     option: Types.ObjectId;
+
+    @Prop({ required: true, unique: true })
+    cne: string; 
+
+    @Prop({ required: true, unique: true })
+    cni: string;
 
     @Prop({ required: true })
     gender: string; 

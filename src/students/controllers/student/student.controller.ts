@@ -6,7 +6,6 @@ import {
     Param,
     Put,
     Delete,
-    NotFoundException,
   } from '@nestjs/common';
   import { StudentService } from '../../services/student/student.service';
   import { CreateStudentDto } from '../../dto/create-student.dto';
@@ -28,18 +27,11 @@ import {
   
     @Get(':id')
     async findOne(@Param('id') id: string) {
-      const student = await this.studentService.findOne(id);
-      if (!student) {
-        throw new NotFoundException('Student not found');
-      }
-      return student;
+      return this.studentService.findOne(id);
     }
   
     @Put(':id')
-    async update(
-      @Param('id') id: string,
-      @Body() updateStudentDto: UpdateStudentDto,
-    ) {
+    async update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
       return this.studentService.update(id, updateStudentDto);
     }
   
