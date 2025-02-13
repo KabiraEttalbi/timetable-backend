@@ -6,12 +6,14 @@ import { CreateTeacherDto } from 'src/teachers/dto/create-teacher.dto';
 import { Teacher, TeacherDocument } from 'src/teachers/models/teacher.model';
 import { UpdateTeacherDto } from 'src/teachers/dto/update-teacher.dto';
 import { User, UserDocument } from 'src/users/models/user.model';
+import { UserService } from 'src/users/services/user/user.service';
 
 @Injectable()
 export class TeacherService {
   constructor(
     @InjectModel(Teacher.name)
     private teacherModel: Model<TeacherDocument>,
+    private userService: UserService,
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
     @InjectModel(Departement.name)
@@ -38,7 +40,7 @@ export class TeacherService {
   }
 
   async findAll(): Promise<Teacher[]> {
-    return this.teacherModel.find().populate('user').populate('department').exec();
+    return this.teacherModel.find().populate('user').populate('department').populate('module').exec();
   }
 
   async findOne(id: string): Promise<Teacher | null> {
@@ -46,6 +48,7 @@ export class TeacherService {
       .findById(id)
       .populate('user')
       .populate('department')
+      .populate('module')
       .exec();
   }
 
@@ -53,14 +56,27 @@ export class TeacherService {
     id: string,
     updateTeacherDto: UpdateTeacherDto,
   ): Promise<Teacher | null> {
-    return this.teacherModel
-      .findByIdAndUpdate(id, updateTeacherDto, { new: true })
-      .populate('user')
-      .populate('department')
-      .exec();
+    const { user, ...teacherData } = updateTeacherDto;
+
+    const teacher = await this.teacherModel.findById(id).populate('user').populate('departement').populate('module');
+    if (!teacher) throw new NotFoundException('Teacher not found');
+
+    // Update User if user data is provided
+    if (user) {
+      await this.userService.update(teacher.user.toString(), user);
+    }
+
+    // Update Teacher
+    return this.teacherModel.findByIdAndUpdate(id, teacherData, { new: true });
+
   }
 
   async delete(id: string): Promise<Teacher | null> {
+    const teacher = await this.teacherModel.findById(id);
+    if (!teacher) throw new NotFoundException('Teacher not found');
+
+        // Delete associated User
+    await this.userService.delete(teacher.user.toString());
     return this.teacherModel.findByIdAndDelete(id).exec();
   }
 }
