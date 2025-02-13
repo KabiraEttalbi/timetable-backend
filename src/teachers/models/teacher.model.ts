@@ -17,15 +17,15 @@ export class Teacher {
     @Prop({ required: true, unique: true })
         cni: string;
         
-        @Prop({ required: true,
-            validate: {
-                validator: function(value: Date) {
-                    // Example: Validate that the date is in 'YYYY-MM-DD' format
-                    return moment(value, 'YYYY-MM-DD', true).isValid();
-                },
-                message: (props: { value: Date }) => `${props.value} is not a valid date in the format YYYY-MM-DD!`
-            }})
-        birthdate: Date;
+    @Prop({ required: true,
+        validate: {
+            validator: function(value: Date) {
+                // Example: Validate that the date is in 'YYYY-MM-DD' format
+                return moment(value, 'YYYY-MM-DD', true).isValid();
+            },
+            message: (props: { value: Date }) => `${props.value} is not a valid date in the format YYYY-MM-DD!`
+        }})
+    birthdate: Date;
 
     @Prop({ required: true })
     gender: string;
