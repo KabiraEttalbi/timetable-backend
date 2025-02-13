@@ -16,6 +16,7 @@ import { StudentsModule } from "./students/students.module";
 import { OptionsModule } from "./options/options.module";
 import { DepartementsModule } from "./departements/departements.module";
 import { NotificationModule } from "./notification/notification.module";
+import { ReservationModule } from "./reservations/reservations.module";
 
 @Module({
   imports: [
@@ -34,7 +35,8 @@ import { NotificationModule } from "./notification/notification.module";
     StudentsModule,
     TeachersModule,
     DepartementsModule,
-    NotificationModule
+    NotificationModule,
+    ReservationModule,  
   ],
   controllers: [AppController],
   providers: [AppService], // Ajoute le TestService dans les providers

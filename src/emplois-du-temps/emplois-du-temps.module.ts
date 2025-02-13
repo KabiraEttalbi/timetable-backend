@@ -17,9 +17,9 @@ import { Notification, NotificationSchema } from 'src/notification/models/notifi
     MongooseModule.forFeature([
       { name: EmploiDuTemps.name, schema: EmploiDuTempsSchema },
       { name: Teacher.name, schema: TeacherSchema },
-      { name: Notification.name, schema: NotificationSchema }, // Register NotificationModel
-      { name: ModuleModel.name, schema: ModuleSchema }, // 🔥 Ajout du modèle Module
-      { name: Salle.name, schema: SalleSchema }, // 🔥 Ajout du modèle Salle
+      { name: Notification.name, schema: NotificationSchema }, 
+      { name: ModuleModel.name, schema: ModuleSchema }, 
+      { name: Salle.name, schema: SalleSchema }, 
     ]),
     ModulesModule, 
   ],

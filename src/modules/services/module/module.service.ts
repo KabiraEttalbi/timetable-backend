@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Module } from '../../models/module.model';
+import { CreateModuleDto } from '../../dto/create-module.dto';
+import { UpdateModuleDto } from '../../dto/update-module.dto';
+
 
 @Injectable()
 export class ModuleService {
@@ -9,8 +12,8 @@ export class ModuleService {
     @InjectModel(Module.name) private readonly moduleModel: Model<Module>,
   ) {}
 
-  async create(module: Module): Promise<Module> {
-    const newModule = new this.moduleModel(module);
+  async create(createModuleDto: CreateModuleDto): Promise<Module> {
+    const newModule = new this.moduleModel(createModuleDto);
     return newModule.save();
   }
 
@@ -22,8 +25,8 @@ export class ModuleService {
     return this.moduleModel.findById(id).exec();
   }
 
-  async update(id: string, module: Module): Promise<Module | null> {
-    return this.moduleModel.findByIdAndUpdate(id, module, { new: true }).exec();
+  async update(id: string, updateModuleDto: UpdateModuleDto): Promise<Module | null> {
+    return this.moduleModel.findByIdAndUpdate(id, updateModuleDto, { new: true }).exec();
   }
 
   async delete(id: string): Promise<Module | null> {

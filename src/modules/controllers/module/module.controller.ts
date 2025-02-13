@@ -1,14 +1,16 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { ModuleService } from '../../services/module/module.service';
 import { Module } from '../../models/module.model';
+import { CreateModuleDto } from '../../dto/create-module.dto';
+import { UpdateModuleDto } from '../../dto/update-module.dto';
 
 @Controller('module')
 export class ModuleController {
   constructor(private readonly moduleService: ModuleService) {}
 
   @Post()
-  async create(@Body() module: Module): Promise<Module> {
-    return this.moduleService.create(module);
+  async create(@Body() createModuleDto: CreateModuleDto): Promise<Module> {
+    return this.moduleService.create(createModuleDto);
   }
 
   @Get()
@@ -22,8 +24,8 @@ export class ModuleController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() module: Module): Promise<Module | null> {
-    return this.moduleService.update(id, module);
+  async update(@Param('id') id: string, @Body() updateModuleDto: UpdateModuleDto): Promise<Module | null> {
+    return this.moduleService.update(id, updateModuleDto);
   }
 
   @Delete(':id')

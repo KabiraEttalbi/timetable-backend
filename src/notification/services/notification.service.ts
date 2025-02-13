@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model,Types } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Notification, NotificationDocument } from '../models/notification.model';
 import * as nodemailer from 'nodemailer';
 import * as dotenv from 'dotenv';
+import { CreateNotificationDto } from '../dto/create-notification.dto';
 
 @Injectable()
 export class NotificationService {
@@ -15,13 +16,13 @@ export class NotificationService {
     // Configuration de Nodemailer pour Gmail
     dotenv.config();
 
-this.transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS,
-  },
-});
+    this.transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS,
+      },
+    });
   }
 
   /**
@@ -30,23 +31,28 @@ this.transporter = nodemailer.createTransport({
    * @param title Titre de la notification (ex: "Changement d'horaire")
    * @param message Contenu de la notification
    */
-  async envoyerNotification(userId: Types.ObjectId, title: string, message: string): Promise<void> {
-    // Enregistrer la notification dans la base de données
-    const nouvelleNotification = new this.notificationModel({
-      userId,
-      title,
-      message,
-      lue: false,
-      date: new Date(),
-    });
-    await nouvelleNotification.save();
+  async envoyerNotification(createNotificationDto: CreateNotificationDto): Promise<void> {
+    try {
+      // Enregistrer la notification dans la base de données
+      const nouvelleNotification = new this.notificationModel({
+        userId: createNotificationDto.userId,
+        title: createNotificationDto.title,
+        message: createNotificationDto.message,
+        lue: false,
+        date: new Date(),
+      });
+      await nouvelleNotification.save();
 
-    // Envoyer un e-mail à l'utilisateur
-    const utilisateur = await this.getUserInfo(userId); // Récupérer les infos de l'utilisateur (e-mail)
-    if (utilisateur && utilisateur.email) {
-      await this.envoyerEmail(utilisateur.email, title, message); // Utiliser le titre comme objet de l'e-mail
-    } else {
-      console.error('Aucun e-mail trouvé pour l\'utilisateur :', userId);
+      // Envoyer un e-mail
+      const utilisateur = await this.getUserInfo(createNotificationDto.userId);
+      if (utilisateur && utilisateur.email) {
+        await this.envoyerEmail(utilisateur.email, createNotificationDto.title, createNotificationDto.message);
+      } else {
+        throw new Error('Aucun e-mail trouvé pour l\'utilisateur : ' + createNotificationDto.userId);
+      }
+    } catch (error) {
+      console.error('Erreur dans l\'envoi de la notification :', error);
+      throw new Error('Échec de l\'envoi de la notification');
     }
   }
 
@@ -56,6 +62,7 @@ this.transporter = nodemailer.createTransport({
    * @param sujet Sujet de l'e-mail (titre de la notification)
    * @param contenu Contenu de l'e-mail (message de la notification)
    */
+  // Méthode pour envoyer un e-mail
   private async envoyerEmail(destinataire: string, sujet: string, contenu: string): Promise<void> {
     const mailOptions = {
       from: 'oumaymarochdi01@gmail.com', // Remplacez par votre adresse Gmail
@@ -72,7 +79,6 @@ this.transporter = nodemailer.createTransport({
       throw new Error('Échec de l\'envoi de l\'e-mail');
     }
   }
-
   /**
    * Récupérer les informations de l'utilisateur (e-mail)
    * @param userId ID de l'utilisateur
