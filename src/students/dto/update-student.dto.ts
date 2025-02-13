@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, Matches } from 'class-validator';
+import { IsString, IsNumber, IsOptional, Matches, IsDateString } from 'class-validator';
 import { Types } from 'mongoose';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 
@@ -22,6 +22,10 @@ export class UpdateStudentDto {
   @Matches(/^[A-Za-z]{1,2}\d{6}$/)
   cni?: string; 
 
+  @IsOptional()
+  @IsDateString()
+  birthdate?: Date;
+  
   @IsString()
   @IsOptional()
   gender?: string;

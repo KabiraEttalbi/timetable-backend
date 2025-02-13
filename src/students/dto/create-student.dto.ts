@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, Matches } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, Matches, IsDateString } from 'class-validator';
 import { Types } from 'mongoose';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
@@ -21,6 +21,10 @@ export class CreateStudentDto {
   @IsString()
   @Matches(/^[A-Za-z]{1,2}\d{6}$/)
   cni: string; 
+
+  @IsNotEmpty()
+  @IsDateString()
+  birthdate: Date;
 
   @IsString()
   @IsNotEmpty()
