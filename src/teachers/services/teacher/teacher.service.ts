@@ -27,6 +27,9 @@ export class TeacherService {
       throw new NotFoundException('User not found');
     }
 
+    // Ensure the user role is 'enseignant'
+    user.role = 'enseignant';
+
     // Check if the referenced department exists
     const department = await this.departementModel
       .findById(createTeacherDto.department)
@@ -52,25 +55,19 @@ export class TeacherService {
       .exec();
   }
 
-  async update(
-    id: string,
-    updateTeacherDto: UpdateTeacherDto,
-  ): Promise<Teacher | null> {
-    const { user, ...teacherData } = updateTeacherDto;
-
-    const teacher = await this.teacherModel.findById(id).populate('user').populate('departement').populate('module');
+  async update(id: string, updateTeacherDto: UpdateTeacherDto): Promise<Teacher | null> {
+    const teacher = await this.teacherModel.findById(id).populate('user').populate('departement').populate('module').exec();
     if (!teacher) throw new NotFoundException('Teacher not found');
 
-    // Update User if user data is provided
-    if (user) {
-      await this.userService.update(teacher.user.toString(), user);
+    // If user data is provided, update the user as well
+    if (updateTeacherDto.user) {
+        updateTeacherDto.user.role = 'enseignant'; // Ensure role remains 'enseignant'
+        await this.userService.update(teacher.user.toString(), updateTeacherDto.user);
     }
 
     // Update Teacher
-    return this.teacherModel.findByIdAndUpdate(id, teacherData, { new: true });
-
-  }
-
+    return this.teacherModel.findByIdAndUpdate(id, updateTeacherDto, { new: true });
+}
   async delete(id: string): Promise<Teacher | null> {
     const teacher = await this.teacherModel.findById(id);
     if (!teacher) throw new NotFoundException('Teacher not found');
