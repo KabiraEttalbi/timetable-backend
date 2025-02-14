@@ -37,4 +37,13 @@ export class DepartementService {
   async delete(id: string): Promise<Departement | null> {
     return this.departementModel.findByIdAndDelete(id).exec();
   }
+
+  async findOneWithDetails(id: string) {
+    return this.departementModel
+      .findById(id)
+      .populate('teachers')
+      .populate('modules')
+      .populate('niveaux')
+      .exec();
+  }
 }

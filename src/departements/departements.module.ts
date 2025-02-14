@@ -12,5 +12,6 @@ import { DepartementController } from './controllers/departement/departement.con
   ],
   controllers: [DepartementController],
   providers: [DepartementService],
+  exports: [DepartementService],
 })
 export class DepartementsModule {}

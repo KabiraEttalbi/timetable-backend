@@ -29,6 +29,12 @@ export class DepartementController {
   async findOne(@Param('id') id: string) {
     return this.departementService.findOne(id);
   }
+  
+  @Get(':id/details')
+  async findOneWithDetails(@Param('id') id: string) {
+    return this.departementService.findOneWithDetails(id);
+  }
+
 
   @Put(':id')
   async update(
