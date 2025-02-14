@@ -64,7 +64,7 @@ export class TeacherService {
     return createdTeacher.save();  }
 
   async findAll(): Promise<Teacher[]> {
-    return this.teacherModel.find().populate('user').populate('department').populate('module').exec();
+    return this.teacherModel.find().populate('user').populate('department').populate('modules').exec();
   }
 
   async findOne(id: string): Promise<Teacher | null> {
@@ -72,12 +72,12 @@ export class TeacherService {
       .findById(id)
       .populate('user')
       .populate('department')
-      .populate('module')
+      .populate('modules')
       .exec();
   }
 
   async update(id: string, updateTeacherDto: UpdateTeacherDto): Promise<Teacher | null> {
-    const teacher = await this.teacherModel.findById(id).populate('user').populate('departement').populate('module').exec();
+    const teacher = await this.teacherModel.findById(id).populate('user').populate('departement').populate('modules').exec();
     if (!teacher) throw new NotFoundException('Teacher not found');
 
     // If user data is provided, update the user as well
