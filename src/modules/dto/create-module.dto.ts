@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, IsMongoId } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsMongoId, IsOptional } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class CreateModuleDto {
@@ -18,6 +18,7 @@ export class CreateModuleDto {
   @IsMongoId()
   option: Types.ObjectId;
 
+  @IsOptional()
   @IsMongoId()
   teacher?: Types.ObjectId; 
 }
