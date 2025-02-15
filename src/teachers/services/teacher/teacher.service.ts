@@ -25,7 +25,7 @@ export class TeacherService {
 
   async create(createTeacherDto: CreateTeacherDto): Promise<Teacher> {
     
-    const { user, department, modules, ...teacherData } = createTeacherDto;
+    const { user, ...teacherData } = createTeacherDto;
 
     if (!user || !user.email || !user.password) {
       throw new BadRequestException('User details are required');
@@ -35,30 +35,11 @@ export class TeacherService {
 
     // Création de l'utilisateur
     const createdUser = await this.userService.create(user);
-    if (!createdUser || !createdUser._id) {
-      throw new InternalServerErrorException('Failed to create user');
-    }
-  
-    // Vérification de l'existence du département
-    const existingDepartment = await this.departementModel.findById(department).exec();
-    if (!existingDepartment) {
-      throw new NotFoundException('Department not found');
-    }
-  
-    // Vérification de l'existence des modules
-    if (modules && modules.length > 0) {
-      const existingModules = await this.moduleModel.find({ _id: { $in: modules } }).exec();
-      if (existingModules.length !== modules.length) {
-        throw new NotFoundException('One or more modules not found');
-      }
-    }
-  
+    
     // Création de l'enseignant
     const createdTeacher = new this.teacherModel({
       ...teacherData,
       user: createdUser._id,  // Stocker uniquement l'ObjectId de l'utilisateur
-      department: existingDepartment._id,
-      modules, // Stocker les ObjectId des modules
     });
   
     return createdTeacher.save();  }
@@ -76,18 +57,21 @@ export class TeacherService {
       .exec();
   }
 
-  async update(id: string, updateTeacherDto: UpdateTeacherDto): Promise<Teacher | null> {
-    const teacher = await this.teacherModel.findById(id).populate('user').populate('departement').populate('modules').exec();
-    if (!teacher) throw new NotFoundException('Teacher not found');
+  async update(id: string, updateTeacherDto: UpdateTeacherDto) {
 
-    // If user data is provided, update the user as well
-    if (updateTeacherDto.user) {
-        updateTeacherDto.user.role = 'enseignant'; // Ensure role remains 'enseignant'
-        await this.userService.update(teacher.user.toString(), updateTeacherDto.user);
+    const { user, ...teacherData } = updateTeacherDto;
+
+    const teacher = await this.teacherModel.findById(id).populate('department').populate('modules');
+    if (!teacher) throw new NotFoundException('teacher not found');
+
+    // Update User if user data is provided
+    if (user) {
+      await this.userService.update(teacher.user.toString(), user);
     }
 
-    // Update Teacher
-    return this.teacherModel.findByIdAndUpdate(id, updateTeacherDto, { new: true });
+    // Update teacher
+    return this.teacherModel.findByIdAndUpdate(id, teacherData, { new: true });
+    
 }
   async delete(id: string): Promise<Teacher | null> {
     const teacher = await this.teacherModel.findById(id);

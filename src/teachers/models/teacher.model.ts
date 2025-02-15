@@ -8,7 +8,7 @@ export type TeacherDocument = Teacher & Document;
 
 @Schema()
 export class Teacher {
-    @Prop({ type: Types.ObjectId, ref: "User", required: true })
+    @Prop({ type: Types.ObjectId, ref: "User", required: true, unique: true  })
     user: Types.ObjectId;
 
     @Prop({ type: Types.ObjectId, ref: "Departement", required: true })
@@ -36,7 +36,7 @@ export class Teacher {
     @Prop({ required: true })
     phoneNumber: string;
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: "Module" }] })
+    @Prop({ type: [{ type: Types.ObjectId, ref: "Module" }], required: false })
     modules: Types.ObjectId[];
 
     @Prop({ required: true }) 

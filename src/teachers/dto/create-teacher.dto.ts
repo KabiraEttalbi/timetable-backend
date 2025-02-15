@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsArray, Matches, IsDateString } from 'class-validator';
+import { IsString, IsNotEmpty, IsArray, Matches, IsDateString, IsOptional } from 'class-validator';
 import { Types } from 'mongoose';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
@@ -31,8 +31,8 @@ export class CreateTeacherDto {
   phoneNumber: string;
 
   @IsArray()
-  @IsNotEmpty()
-  modules: Types.ObjectId[]; // Array of references to the Module model
+  @IsOptional()
+  modules?: Types.ObjectId[]; // Array of references to the Module model
 
   @IsString()
   @IsNotEmpty()
