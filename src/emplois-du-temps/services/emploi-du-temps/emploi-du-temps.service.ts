@@ -33,6 +33,12 @@ export class EmploiDuTempsService {
   async remove(id: string): Promise<EmploiDuTemps | null> {
     return this.emploiDuTempsModel.findByIdAndDelete(id).exec();
   }
+  async getScheduleByStudent(studentId: string) {
+    return this.emploiDuTempsModel.find({ user: studentId, type: 'student' })
+      .populate('module')
+      .populate('salle')
+      .exec();
+  }
 
   /**
    * Génère automatiquement les emplois du temps pour un département donné.

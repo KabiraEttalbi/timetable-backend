@@ -34,6 +34,10 @@ export class EmploiDuTempsController {
   async remove(@Param('id') id: string): Promise<EmploiDuTemps | null> {
     return this.emploiDuTempsService.remove(id);
   }
+  @Get('student/:studentId')
+  async getStudentSchedule(@Param('studentId') studentId: string) {
+    return this.emploiDuTempsService.getScheduleByStudent(studentId);
+  }
 
   @Post('generate/:departementId')
   async generateEmploiDuTemps(@Param('departementId') departementId: string): Promise<EmploiDuTemps[]> {
