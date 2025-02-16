@@ -10,7 +10,7 @@ export class UpdateOptionDto {
   @IsOptional()
   description?: string;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
   duration?: string;
 
