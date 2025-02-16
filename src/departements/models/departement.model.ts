@@ -6,24 +6,20 @@ export type DepartementDocument = Departement & Document;
 
 @Schema()
 export class Departement {
-    @Prop({ required: true, unique: true })
-    name: string;
+  @Prop({ required: true, unique: true })
+  name: string;
 
-    @Prop({ required: true, unique: true })
-    description: string;
+  @Prop({ required: true, unique: true })
+  description: string;
 
-    // Référence vers les enseignants du département
-  @Prop({ type: [{ type: Types.ObjectId, ref: "Teacher" }] })
+  // Référence vers les enseignants du département
+  @Prop({ type: [{ type: Types.ObjectId, ref: "Teacher", required: false }] })
   teachers: Types.ObjectId[];
 
-  // Référence vers les modules du département
-  @Prop({ type: [{ type: Types.ObjectId, ref: "Module" }] })
-  modules: Types.ObjectId[];
+  // Référence vers les filières du département
+  @Prop({ type: [{ type: Types.ObjectId, ref: "Option", required: false }] })
+  options: Types.ObjectId[];
 
-  // Référence vers les niveaux du département
-  @Prop({ type: [{ type: Types.ObjectId, ref: "Niveau" }] })
-  niveaux: Types.ObjectId[];
 }
 
 export const DepartementSchema = SchemaFactory.createForClass(Departement);
-   

@@ -39,8 +39,8 @@ export class EmploiDuTempsController {
     return this.emploiDuTempsService.getScheduleByStudent(studentId);
   }
 
-  @Post('generate/:departementId')
-  async generateEmploiDuTemps(@Param('departementId') departementId: string): Promise<EmploiDuTemps[]> {
-    return this.emploiDuTempsService.generateEmploiDuTemps(departementId);
-  }
+  // @Post('generate/:departementId')
+  // async generateEmploiDuTemps(@Param('departementId') departementId: string): Promise<EmploiDuTemps[]> {
+  //   return this.emploiDuTempsService.generateEmploiDuTemps(departementId);
+  // }
 }

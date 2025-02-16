@@ -52,46 +52,6 @@ export class EmploiDuTempsService {
       .exec();
   }
 
-  /**
-   * Génère automatiquement les emplois du temps pour un département donné.
-   * @param departementId - L'ID du département.
-   */
-  async generateEmploiDuTemps(departementId: string): Promise<EmploiDuTemps[]> {
-    // Récupérer les données du département
-    const departement = await this.departementService.findOneWithDetails(departementId);
-
-    if (!departement) {
-      throw new Error('Département non trouvé.');
-    }
-
-    const { teachers, modules, niveaux } = departement;
-
-    // Logique pour générer les emplois du temps
-    const generatedEmploisDuTemps: CreateEmploiDuTempsDto[] = [];
-
-    // Exemple de logique simple : assigner chaque module à un enseignant et un niveau
-    for (const module of modules) {
-      for (const niveau of niveaux) {
-        for (const teacher of teachers) {
-          const emploiDuTemps: CreateEmploiDuTempsDto = {
-            jour: this.getRandomDay(),
-            heureDebut: this.getRandomTime(),
-            heureFin: this.getRandomTime(),
-            module: new Types.ObjectId(module._id), // Convertir en ObjectId
-            salle: new Types.ObjectId(this.getRandomSalle()), // Convertir en ObjectId
-            type: ScheduleType.STUDENT, // Utiliser l'enum ScheduleType
-            user: new Types.ObjectId(niveau._id), // Convertir en ObjectId
-          };
-          generatedEmploisDuTemps.push(emploiDuTemps);
-        }
-      }
-    }
-
-    // Enregistrer les emplois du temps générés dans la base de données
-    const savedEmploisDuTemps = await this.emploiDuTempsModel.insertMany(generatedEmploisDuTemps);
-
-    return savedEmploisDuTemps;
-  }
 
   /**
    * Retourne un jour aléatoire de la semaine.

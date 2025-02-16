@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty,IsArray, IsMongoId } from 'class-validator';
+import { IsString, IsNotEmpty,IsArray, IsMongoId, IsOptional } from 'class-validator';
 import { Types } from 'mongoose';
 export class CreateDepartementDto {
   @IsString()
@@ -9,14 +9,14 @@ export class CreateDepartementDto {
   @IsNotEmpty()
   description: string;
 
+  @IsOptional()
   @IsArray()
   @IsMongoId({ each: true }) 
-  teachers: Types.ObjectId[];
+  teachers?: Types.ObjectId[];
 
   @IsArray()
   @IsMongoId({ each: true }) 
+  @IsOptional()
+  options?: Types.ObjectId[];
 
-  @IsArray()
-  @IsMongoId({ each: true })
-  niveaux: Types.ObjectId[];
 }
