@@ -19,10 +19,6 @@ export class UpdateDepartementDto {
   @IsArray()
   @IsMongoId({ each: true }) 
   @IsOptional()
-  modules?: Types.ObjectId[];
+  options?: Types.ObjectId[];
 
-  @IsArray()
-  @IsMongoId({ each: true }) 
-  @IsOptional()
-  niveaux?: Types.ObjectId[];
 }

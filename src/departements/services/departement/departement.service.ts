@@ -18,11 +18,17 @@ export class DepartementService {
   }
 
   async findAll(): Promise<Departement[]> {
-    return this.departementModel.find().exec();
+    return this.departementModel.find()    
+    .populate('teachers')
+    .populate('options')
+    .exec();
   }
 
   async findOne(id: string): Promise<Departement | null> {
-    return this.departementModel.findById(id).exec();
+    return this.departementModel.findById(id)
+    .populate('teachers')
+    .populate('options')
+    .exec();
   }
 
   async update(
@@ -31,6 +37,8 @@ export class DepartementService {
   ): Promise<Departement | null> {
     return this.departementModel
       .findByIdAndUpdate(id, updateDepartementDto, { new: true })
+      .populate('teachers')
+      .populate('options')
       .exec();
   }
 
@@ -42,8 +50,7 @@ export class DepartementService {
     return this.departementModel
       .findById(id)
       .populate('teachers')
-      .populate('modules')
-      .populate('niveaux')
+      .populate('options')
       .exec();
   }
-}
+} 
