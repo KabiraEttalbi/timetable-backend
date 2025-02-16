@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Niveau } from '../../models/niveau.model';
 import { CreateNiveauDto } from '../../dto/create-niveau.dto';
-import { UpdateNiveauDto } from '../..//dto/update-niveau.dto';
+import { UpdateNiveauDto } from '../../dto/update-niveau.dto';
 
 @Injectable()
 export class NiveauService {
