@@ -18,15 +18,45 @@ export class ModuleService {
   }
 
   async findAll(): Promise<Module[]> {
-    return this.moduleModel.find().populate('option').populate('teacher').populate('niveau').exec();
+    return this.moduleModel
+      .find()
+      .populate({
+        path: 'teacher',
+        populate: {
+          path: 'user', // Populate the 'user' field inside 'teacher'
+        },
+      })
+      .populate('option')
+      .populate('niveau')
+      .exec();
   }
 
   async findOne(id: string): Promise<Module | null> {
-    return this.moduleModel.findById(id).populate('option').populate('teacher').populate('niveau').exec();
+    return this.moduleModel
+      .findById(id)
+      .populate({
+        path: 'teacher',
+        populate: {
+          path: 'user', // Populate the 'user' field inside 'teacher'
+        },
+      })
+      .populate('option')
+      .populate('niveau')
+      .exec();
   }
 
   async update(id: string, updateModuleDto: UpdateModuleDto): Promise<Module | null> {
-    return this.moduleModel.findByIdAndUpdate(id, updateModuleDto, { new: true }).populate('option').populate('teacher').populate('niveau').exec();
+    return this.moduleModel
+      .findByIdAndUpdate(id, updateModuleDto, { new: true })
+      .populate({
+        path: 'teacher',
+        populate: {
+          path: 'user', // Populate the 'user' field inside 'teacher'
+        },
+      })
+      .populate('option')
+      .populate('niveau')
+      .exec();
   }
 
   async delete(id: string): Promise<Module | null> {
