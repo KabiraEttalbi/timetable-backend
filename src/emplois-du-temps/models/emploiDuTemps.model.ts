@@ -29,7 +29,7 @@ export class EmploiDuTemps {
   @Prop({ required: true, enum: ScheduleType })
   type: ScheduleType; // Indicates whether this is a student or teacher schedule
 
-  @Prop({ type: Types.ObjectId, refPath: "type", required: true })
+  @Prop({ type: Types.ObjectId, ref: "User", required: true })
   user: Types.ObjectId; // Links to either Student or Teacher based on `type`
 
 }

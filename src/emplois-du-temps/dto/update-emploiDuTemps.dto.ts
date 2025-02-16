@@ -15,11 +15,9 @@ export class UpdateEmploiDuTempsDto {
   @IsOptional()
   heureFin?: string;
 
-  @IsMongoId()
   @IsOptional()
   module?: Types.ObjectId;
 
-  @IsMongoId()
   @IsOptional()
   salle?: Types.ObjectId;
 
@@ -27,7 +25,6 @@ export class UpdateEmploiDuTempsDto {
   @IsOptional()
   type?: ScheduleType;
 
-  @IsMongoId()
   @IsOptional()
   user?: Types.ObjectId;
 }

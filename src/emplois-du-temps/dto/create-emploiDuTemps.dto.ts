@@ -1,4 +1,4 @@
-import { IsEnum, IsMongoId, IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 import { ScheduleType } from '../models/emploiDuTemps.model';
 
@@ -15,12 +15,10 @@ export class CreateEmploiDuTempsDto {
   @IsString()
   heureFin: string;
 
-  @IsNotEmpty()
-  @IsMongoId()
+  @IsOptional()
   module: Types.ObjectId;
 
   @IsNotEmpty()
-  @IsMongoId()
   salle: Types.ObjectId;
 
   @IsNotEmpty()
@@ -28,6 +26,6 @@ export class CreateEmploiDuTempsDto {
   type: ScheduleType;
 
   @IsNotEmpty()
-  @IsMongoId()
   user: Types.ObjectId;
 }
+
