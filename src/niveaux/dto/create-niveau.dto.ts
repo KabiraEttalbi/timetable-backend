@@ -7,8 +7,8 @@ export class CreateNiveauDto {
   name: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  cycle: number;
+  @IsString()
+  cycle: string;
 
   @IsNotEmpty()
   option: Types.ObjectId;

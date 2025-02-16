@@ -6,9 +6,9 @@ export class UpdateNiveauDto {
   @IsOptional()
   name?: string;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
-  cycle?: number;
+  cycle?: string;
 
   @IsOptional()
   option?: Types.ObjectId;

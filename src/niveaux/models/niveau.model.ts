@@ -9,7 +9,7 @@ export class Niveau {
     name: string;
 
     @Prop({ required: true })
-    cycle: number;
+    cycle: string;
     
     @Prop({ type: Types.ObjectId, ref: "Option", required: true })
     option: Types.ObjectId;
