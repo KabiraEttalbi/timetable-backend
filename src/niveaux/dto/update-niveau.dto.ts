@@ -1,11 +1,15 @@
 import { IsString, IsOptional, IsNumber } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class UpdateNiveauDto {
   @IsString()
   @IsOptional()
   name?: string;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
-  cycle?: number;
+  cycle?: string;
+
+  @IsOptional()
+  option?: Types.ObjectId;
 }
