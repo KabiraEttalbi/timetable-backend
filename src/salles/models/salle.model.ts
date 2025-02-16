@@ -6,8 +6,7 @@ export type SalleDocument = Salle & Document;
 
 @Schema()
 export class Salle {
-  _id: Types.ObjectId;
-  
+
   @Prop({ required: true })
   name: string;
 
