@@ -1,4 +1,5 @@
 import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateNiveauDto {
   @IsNotEmpty()
@@ -8,4 +9,7 @@ export class CreateNiveauDto {
   @IsNotEmpty()
   @IsNumber()
   cycle: number;
+
+  @IsNotEmpty()
+  option: Types.ObjectId;
 }
