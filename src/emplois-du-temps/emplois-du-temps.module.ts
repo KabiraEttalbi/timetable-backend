@@ -12,6 +12,7 @@ import { NotificationService } from '../notification/services/notification.servi
 import { EmploiDuTempsController } from './controllers/emploi-du-temps/emploi-du-temps.controller';
 import { Notification, NotificationSchema } from 'src/notification/models/notification.model';
 import { DepartementsModule } from '../departements/departements.module';
+import { User, UserSchema } from 'src/users/models/user.model';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -20,6 +21,7 @@ import { DepartementsModule } from '../departements/departements.module';
       { name: Notification.name, schema: NotificationSchema }, 
       { name: ModuleModel.name, schema: ModuleSchema }, 
       { name: Salle.name, schema: SalleSchema }, 
+      { name: User.name, schema: UserSchema }, 
     ]),
     ModulesModule, 
     DepartementsModule,
