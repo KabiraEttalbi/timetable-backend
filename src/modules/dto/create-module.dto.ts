@@ -18,7 +18,7 @@ export class CreateModuleDto {
   @IsMongoId()
   option: Types.ObjectId;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsMongoId()
-  teacher?: Types.ObjectId; 
+  teacher: Types.ObjectId; 
 }

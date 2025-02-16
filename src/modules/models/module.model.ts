@@ -17,7 +17,7 @@ export class Module {
   @Prop({ type: Types.ObjectId, ref: "Option", required: true })
   option: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: "Teacher" })
+  @Prop({ type: Types.ObjectId, ref: "Teacher" , required: true })
   teacher: Types.ObjectId;
 }
 
