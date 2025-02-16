@@ -18,15 +18,15 @@ export class ModuleService {
   }
 
   async findAll(): Promise<Module[]> {
-    return this.moduleModel.find().exec();
+    return this.moduleModel.find().populate('option').populate('teacher').populate('niveau').populate('user').exec();
   }
 
   async findOne(id: string): Promise<Module | null> {
-    return this.moduleModel.findById(id).exec();
+    return this.moduleModel.findById(id).populate('option').populate('teacher').populate('niveau').populate('user').exec();
   }
 
   async update(id: string, updateModuleDto: UpdateModuleDto): Promise<Module | null> {
-    return this.moduleModel.findByIdAndUpdate(id, updateModuleDto, { new: true }).exec();
+    return this.moduleModel.findByIdAndUpdate(id, updateModuleDto, { new: true }).populate('option').populate('teacher').populate('user').populate('niveau').exec();
   }
 
   async delete(id: string): Promise<Module | null> {
