@@ -19,14 +19,17 @@ export class EmploiDuTempsService {
   }
 
   async findAll(): Promise<EmploiDuTemps[]> {
+
     return this.emploiDuTempsModel.find()
     .populate('user')      
     .populate('module')
     .populate('salle').exec();
+
   }
 
   async findOne(id: string): Promise<EmploiDuTemps | null> {
-    return this.emploiDuTempsModel.findById(id).exec();
+    return this.emploiDuTempsModel.findById(id).populate('module')
+    .populate('salle').populate(`user`).exec();
   }
 
   async update(id: string, updateEmploiDuTempsDto: UpdateEmploiDuTempsDto): Promise<EmploiDuTemps | null> {
@@ -45,6 +48,7 @@ export class EmploiDuTempsService {
       .populate('user')      
       .populate('module')
       .populate('salle')
+      .populate(`user`)
       .exec();
   }
 
