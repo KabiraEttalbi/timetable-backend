@@ -23,18 +23,18 @@ export class SalleController {
   async findOne(@Param('id') id: string): Promise<Salle | null> {
     return this.salleService.findOne(id);
   }
-  @Get('disponibles/:moduleId')
-  async getSallesDisponibles(
-    @Param('moduleId') moduleId: string,  // Récupérer l'ID du module depuis l'URL
-  ) {
-    // Convertir l'ID du module en ObjectId
-    const moduleIdObject = new Types.ObjectId(moduleId);
+//   @Get('disponibles/:moduleId')
+//   async getSallesDisponibles(
+//     @Param('moduleId') moduleId: string,  // Récupérer l'ID du module depuis l'URL
+//   ) {
+//     // Convertir l'ID du module en ObjectId
+//     const moduleIdObject = new Types.ObjectId(moduleId);
     
-    // Appel de la méthode getDisponibilitesSalles avec les arguments nécessaires
-const salles = await this.salleService.getDisponibilitesSalles(moduleIdObject, 30, 'normal');
+//     // Appel de la méthode getDisponibilitesSalles avec les arguments nécessaires
+// const salles = await this.salleService.getDisponibilitesSalles(moduleIdObject, 30, 'normal');
 
-return salles;
-  }
+// return salles;
+//   }
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateSalleDto: UpdateSalleDto): Promise<Salle | null> {
