@@ -34,21 +34,21 @@ export class SalleService {
 
 
 
-  async getDisponibilitesSalles(moduleId: Types.ObjectId, capaciteMin: number, typeSalle: string): Promise<Salle[]> {
-    return this.salleModel.find({
-      'modules': moduleId,         
-      disponible: true,
-      capacite: { $gte: capaciteMin },  
-      typeSalle: typeSalle,        
-    })
-    .populate({
-      path: 'emploiDuTemps',        
-      match: { module: moduleId },
-      select: 'jour heureDebut heureFin'
-    })
-    .select('_id nom capacite typeSalle emploiDuTemps') // 🔥 Ajout explicite des champs
-    .exec();
-  }
+  // async getDisponibilitesSalles(moduleId: Types.ObjectId, capaciteMin: number, typeSalle: string): Promise<Salle[]> {
+  //   return this.salleModel.find({
+  //     'modules': moduleId,         
+  //     disponible: true,
+  //     capacite: { $gte: capaciteMin },  
+  //     typeSalle: typeSalle,        
+  //   })
+  //   .populate({
+  //     path: 'emploiDuTemps',        
+  //     match: { module: moduleId },
+  //     select: 'jour heureDebut heureFin'
+  //   })
+  //   .select('_id nom capacite typeSalle emploiDuTemps') // 🔥 Ajout explicite des champs
+  //   .exec();
+  // }
   
   
   

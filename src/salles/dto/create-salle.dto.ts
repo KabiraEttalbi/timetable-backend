@@ -16,10 +16,6 @@ export class CreateSalleDto {
   @IsEnum(["amphi", "normal", "haull"]) // Limite les valeurs de type à ces trois
   type: string;
 
-  @IsMongoId()
-  @IsOptional()
-  module?: Types.ObjectId; // ID du module lié à la salle
-
   @IsNotEmpty()
   @IsBoolean()
   disponible: boolean; // True si la salle est disponible, sinon False

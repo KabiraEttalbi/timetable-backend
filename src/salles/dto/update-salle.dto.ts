@@ -15,10 +15,6 @@ export class UpdateSalleDto {
   type?: string;
 
   @IsOptional()
-  @IsMongoId()
-  module?: Types.ObjectId;
-
-  @IsOptional()
   @IsBoolean()
   disponible?: boolean;
 }
