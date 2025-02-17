@@ -16,9 +16,6 @@ export class Salle {
   @Prop({ required: true, enum: ["amphi", "normal", "haull"] })
   type: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'Module', required: false })
-  module: Types.ObjectId;  
-
   @Prop({ default: true })
   disponible: boolean;  
 }
