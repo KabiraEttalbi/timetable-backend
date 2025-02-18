@@ -1,23 +1,39 @@
-import { IsMongoId, IsNotEmpty, IsString, IsDateString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsIn, IsDateString } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class UpdateReservationDto {
-  @IsMongoId()
-  @IsOptional() 
-  salle?: string; 
+  @IsOptional()
+  salle?: Types.ObjectId;
 
   @IsDateString()
-  @IsOptional() 
-  date?: string; 
+  @IsOptional()
+  date?: Date;
 
   @IsString()
-  @IsOptional() 
-  heureDebut?: string; 
+  @IsOptional()
+  title?: string; 
 
   @IsString()
-  @IsOptional() 
-  heureFin?: string; 
+  @IsOptional()
+  description?: string; 
+  
+  @IsString()
+  @IsOptional()
+  heureDebut?: string;
 
-  @IsMongoId()
-  @IsOptional() 
-  utilisateur?: string; 
+  @IsString()
+  @IsOptional()
+  heureFin?: string;
+
+  @IsOptional()
+  user?: Types.ObjectId;
+
+  @IsString()
+  @IsOptional()
+  @IsIn(['event', 'course', 'td', 'tp']) // Validate the type field
+  type?: 'event' | 'course' | 'td' | 'tp';
+
+  @IsOptional()
+  module?: Types.ObjectId; 
+
 }
