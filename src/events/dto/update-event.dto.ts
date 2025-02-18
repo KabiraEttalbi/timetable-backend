@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsMongoId, IsDate } from 'class-validator';
+import { IsString, IsOptional, IsMongoId, IsDate, IsDateString } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class UpdateEventDto {
@@ -10,9 +10,19 @@ export class UpdateEventDto {
   @IsOptional()
   description?: string;
 
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   date?: Date;
+
+  
+  @IsOptional()
+  @IsString()
+  heureDebut?: string;
+  
+  @IsOptional()
+  @IsString()
+  heureFin?: string;
+  
 
   @IsMongoId()
   @IsOptional()
