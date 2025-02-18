@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsMongoId, IsDate } from 'class-validator';
+import { IsString, IsNotEmpty, IsMongoId, IsDate, IsDateString } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class CreateEventDto {
@@ -11,8 +11,16 @@ export class CreateEventDto {
   description: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   date: Date;
+
+  @IsNotEmpty()
+  @IsString()
+  heureDebut: string;
+
+  @IsNotEmpty()
+  @IsString()
+  heureFin: string;
 
   @IsNotEmpty()
   @IsMongoId()
@@ -21,4 +29,4 @@ export class CreateEventDto {
   @IsNotEmpty()
   @IsMongoId()
   reservation: Types.ObjectId;
-}
+} 
