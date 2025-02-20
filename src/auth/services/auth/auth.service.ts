@@ -31,7 +31,8 @@ export class AuthService {
     await this.userService.update(user.id, { isAuthenticated: true });
     const payload = { email: user.email, sub: user.id };
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload, { expiresIn: '1h' }),
+      role: user.role,
     };
   }
 
