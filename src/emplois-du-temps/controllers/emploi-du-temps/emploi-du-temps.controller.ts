@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete,ConflictException } from '@nestjs/common';
 import { CreateEmploiDuTempsDto } from '../../dto/create-emploiDuTemps.dto';
 import { UpdateEmploiDuTempsDto } from '../../dto/update-emploiDuTemps.dto';
 import { EmploiDuTempsService } from '../../services/emploi-du-temps/emploi-du-temps.service';
@@ -9,10 +9,20 @@ import { EmploiDuTemps } from '../../models/emploiDuTemps.model';
 export class EmploiDuTempsController {
   constructor(private readonly emploiDuTempsService: EmploiDuTempsService) { }
 
+  // @Post()
+  // async create(@Body() createEmploiDuTempsDto: CreateEmploiDuTempsDto): Promise<EmploiDuTemps> {
+  //   return this.emploiDuTempsService.create(createEmploiDuTempsDto);
+  // }
   @Post()
   async create(@Body() createEmploiDuTempsDto: CreateEmploiDuTempsDto): Promise<EmploiDuTemps> {
-    return this.emploiDuTempsService.create(createEmploiDuTempsDto);
+    try {
+      return await this.emploiDuTempsService.create(createEmploiDuTempsDto);
+    } catch (error) {
+      // Gestion de l'exception en cas de conflit
+      throw new ConflictException(error.message);
+    }
   }
+
 
 
   @Get()
