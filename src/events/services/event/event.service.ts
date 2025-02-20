@@ -20,43 +20,73 @@ export class EventService {
   async update(id: string, updateEventDto: UpdateEventDto): Promise<Event | null> {
     return this.eventModel
       .findByIdAndUpdate(id, updateEventDto, { new: true })
-      .populate('organizer')
-      .populate('reservation')
+      .populate('organizer')   
+      .populate({
+        path: 'reservation',
+        populate: {
+          path: 'salle'
+        }
+      })
       .exec();
   }
 
   async findOneByReservation(reservationId: Types.ObjectId): Promise<Event | null> {
     return this.eventModel.findOne({ reservation: reservationId })
+    .populate({
+      path: 'reservation',
+      populate: {
+        path: 'salle'
+      }
+    })
     .populate('organizer')
-    .populate('reservation')
     .exec();
   }
 
   async deleteByReservation(reservationId: Types.ObjectId): Promise<void> {
     await this.eventModel.deleteOne({ reservation: reservationId })
+    .populate({
+      path: 'reservation',
+      populate: {
+        path: 'salle'
+      }
+    })
     .populate('organizer')
-    .populate('reservation')
     .exec();
   }
 
   async findAll(): Promise<Event[]> {
     return this.eventModel.find()
+    .populate({
+      path: 'reservation',
+      populate: {
+        path: 'salle'
+      }
+    })
     .populate('organizer')
-    .populate('reservation')
     .exec();
   }
 
   async findOne(id: string): Promise<Event | null> {
     return this.eventModel.findById(id)
+    .populate({
+      path: 'reservation',
+      populate: {
+        path: 'salle'
+      }
+    })
     .populate('organizer')
-    .populate('reservation')
     .exec();
   }
 
   async delete(id: string): Promise<Event | null> {
     return this.eventModel.findByIdAndDelete(id)
+    .populate({
+      path: 'reservation',
+      populate: {
+        path: 'salle'
+      }
+    })
     .populate('organizer')
-    .populate('reservation')
     .exec();
   }
 }
