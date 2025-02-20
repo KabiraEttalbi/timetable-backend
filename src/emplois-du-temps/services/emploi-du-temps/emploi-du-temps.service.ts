@@ -1,41 +1,89 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateEmploiDuTempsDto } from '../../dto/create-emploiDuTemps.dto';
 import { UpdateEmploiDuTempsDto } from '../../dto/update-emploiDuTemps.dto';
 import { EmploiDuTemps, EmploiDuTempsDocument, ScheduleType } from '../../models/emploiDuTemps.model';
 import { DepartementService } from '../../../departements/services/departement/departement.service';
+import { Salle } from '../../../salles/models/salle.model';
 
 @Injectable()
 export class EmploiDuTempsService {
   constructor(
     @InjectModel(EmploiDuTemps.name) private readonly emploiDuTempsModel: Model<EmploiDuTempsDocument>,
+    @InjectModel(Salle.name) private salleModel: Model<Salle>,
     private readonly departementService: DepartementService,
   ) { }
 
+  //  async create(createEmploiDuTempsDto: CreateEmploiDuTempsDto): Promise<EmploiDuTemps> {
+  //    const createdEmploiDuTemps = new this.emploiDuTempsModel(createEmploiDuTempsDto);
+  //   return createdEmploiDuTemps.save();
+  // }
   async create(createEmploiDuTempsDto: CreateEmploiDuTempsDto): Promise<EmploiDuTemps> {
+    const { salle, heureDebut, heureFin, user } = createEmploiDuTempsDto;
+  
+    // Vérifier si la salle est déjà réservée sur la même plage horaire
+    const salleReservee = await this.emploiDuTempsModel.findOne({
+      salle: new Types.ObjectId(salle),
+      $or: [
+        { heureDebut: { $lt: heureFin }, heureFin: { $gt: heureDebut } } // Conflit d'horaire
+      ]
+    });
+  
+    if (salleReservee) {
+      throw new ConflictException('Cette salle est déjà réservée pour cet horaire.');
+    }
+  
+    // Vérifier si l'étudiant a déjà un cours à cette heure
+    const coursEnConflit = await this.emploiDuTempsModel.findOne({
+      user: new Types.ObjectId(user),
+      $or: [
+        { heureDebut: { $lt: heureFin }, heureFin: { $gt: heureDebut } } // Conflit d'horaire
+      ]
+    });
+  
+    if (coursEnConflit) {
+      throw new ConflictException("L'étudiant a déjà un cours programmé à cet horaire.");
+    }
+  
+    // Si aucune réservation en conflit, enregistrer
     const createdEmploiDuTemps = new this.emploiDuTempsModel(createEmploiDuTempsDto);
     return createdEmploiDuTemps.save();
   }
+  
 
   async findAll(): Promise<EmploiDuTemps[]> {
 
     return this.emploiDuTempsModel.find()
     .populate('user')      
-    .populate('module')
+    .populate({
+      path: 'module',
+      populate: {
+        path: 'option'
+      }
+    })
     .populate('salle').exec();
-
   }
 
   async findOne(id: string): Promise<EmploiDuTemps | null> {
-    return this.emploiDuTempsModel.findById(id).populate('module')
+    return this.emploiDuTempsModel.findById(id) .populate({
+      path: 'module',
+      populate: {
+        path: 'option'
+      }
+    })
     .populate('salle').populate(`user`).exec();
   }
 
   async update(id: string, updateEmploiDuTempsDto: UpdateEmploiDuTempsDto): Promise<EmploiDuTemps | null> {
     return this.emploiDuTempsModel.findByIdAndUpdate(id, updateEmploiDuTempsDto, { new: true })
       .populate('user')      
-      .populate('module')
+      .populate({
+        path: 'module',
+        populate: {
+          path: 'option'
+        }
+      })
       .populate('salle')
       .exec();
   }
@@ -46,7 +94,12 @@ export class EmploiDuTempsService {
   async getScheduleByStudent(studentId: string) {
     return this.emploiDuTempsModel.find({ user: studentId, type: 'student' })
       .populate('user')      
-      .populate('module')
+      .populate({
+        path: 'module',
+        populate: {
+          path: 'option'
+        }
+      })
       .populate('salle')
       .populate(`user`)
       .exec();
