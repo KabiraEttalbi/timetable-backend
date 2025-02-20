@@ -56,20 +56,34 @@ export class EmploiDuTempsService {
 
     return this.emploiDuTempsModel.find()
     .populate('user')      
-    .populate('module')
+    .populate({
+      path: 'module',
+      populate: {
+        path: 'option'
+      }
+    })
     .populate('salle').exec();
-
   }
 
   async findOne(id: string): Promise<EmploiDuTemps | null> {
-    return this.emploiDuTempsModel.findById(id).populate('module')
+    return this.emploiDuTempsModel.findById(id) .populate({
+      path: 'module',
+      populate: {
+        path: 'option'
+      }
+    })
     .populate('salle').populate(`user`).exec();
   }
 
   async update(id: string, updateEmploiDuTempsDto: UpdateEmploiDuTempsDto): Promise<EmploiDuTemps | null> {
     return this.emploiDuTempsModel.findByIdAndUpdate(id, updateEmploiDuTempsDto, { new: true })
       .populate('user')      
-      .populate('module')
+      .populate({
+        path: 'module',
+        populate: {
+          path: 'option'
+        }
+      })
       .populate('salle')
       .exec();
   }
@@ -80,7 +94,12 @@ export class EmploiDuTempsService {
   async getScheduleByStudent(studentId: string) {
     return this.emploiDuTempsModel.find({ user: studentId, type: 'student' })
       .populate('user')      
-      .populate('module')
+      .populate({
+        path: 'module',
+        populate: {
+          path: 'option'
+        }
+      })
       .populate('salle')
       .populate(`user`)
       .exec();
