@@ -2,6 +2,10 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
 
 export type AuthDocument = Auth & Document;
+export enum TokenType {
+  REFRESH = 'refresh',
+  RESET_PASSWORD = 'resetPassword',
+}
 
 @Schema({ timestamps: true })
 export class Auth {
@@ -11,8 +15,8 @@ export class Auth {
   @Prop({ required: true })
   token: string; // Token (e.g., refresh token, password reset token)
 
-  @Prop({ required: true })
-  type: string; // Token type (e.g., 'refresh', 'resetPassword')
+  @Prop({ required: true, enum: TokenType })
+  type: TokenType; // Token type (e.g., 'refresh', 'resetPassword')
 
   @Prop({ required: true })
   expiresAt: Date; // Expiration date of the token
