@@ -21,13 +21,11 @@ This is the backend repository for the Timetable application. It provides the ne
 - **Database Integration**: Persistent storage for schedules and user data.
 
 ## Technologies Used
-
+- **NestJS**: A progressive Node.js framework for building efficient, reliable, and scalable server-side applications.
 - **Node.js**: Runtime environment for the backend.
-- **Express.js**: Web framework for building APIs.
 - **MongoDB**: NoSQL database for storing data.
 - **Mongoose**: ODM (Object Data Modeling) library for MongoDB.
 - **JWT**: JSON Web Tokens for user authentication.
-- **Docker**: Containerization for easy deployment.
 
 ## Setup and Installation
 
@@ -52,7 +50,7 @@ This is the backend repository for the Timetable application. It provides the ne
 
 4. **Run the server**:
    ```bash
-   npm start
+   npm run start
    ```
 
 5. **Access the API**:
