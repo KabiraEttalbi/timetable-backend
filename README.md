@@ -63,22 +63,22 @@ This is the backend repository for the Timetable application. It provides the ne
 
 - **User Registration**:
   ```
-  POST /api/auth/register
+  POST /auth/register
   ```
 
 - **User Login**:
   ```
-  POST /api/auth/login
+  POST /auth/login
   ```
 
 - **Create Schedule**:
   ```
-  POST /api/emploi-du-temps
+  POST /emploi-du-temps
   ```
 
 - **Get All Schedules**:
   ```
-  GET /api/emploi-du-temps
+  GET /emploi-du-temps
   ```
 
 For more details, refer to the Swagger documentation.
