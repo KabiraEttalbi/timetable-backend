@@ -45,7 +45,7 @@ This is the backend repository for the Timetable application. It provides the ne
 3. **Set up environment variables**:
    Create a `.env` file in the root directory and add the following variables:
    ```
-   PORT=3000
+   PORT=3001
    MONGO_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret_key
    ```
@@ -56,14 +56,8 @@ This is the backend repository for the Timetable application. It provides the ne
    ```
 
 5. **Access the API**:
-   The server will be running at `http://localhost:3000`.
-
-## API Documentation
-
-The API endpoints are documented using Swagger. You can access the API documentation by visiting:
-```
-http://localhost:3000/api-docs
-```
+   The server will be running at `http://localhost:3001`.
+   
 
 ### Example Endpoints
 
@@ -79,12 +73,12 @@ http://localhost:3000/api-docs
 
 - **Create Schedule**:
   ```
-  POST /api/schedules
+  POST /api/emploi-du-temps
   ```
 
 - **Get All Schedules**:
   ```
-  GET /api/schedules
+  GET /api/emploi-du-temps
   ```
 
 For more details, refer to the Swagger documentation.
